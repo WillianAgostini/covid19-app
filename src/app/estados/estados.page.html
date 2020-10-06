@@ -4,12 +4,13 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Estados</ion-title>
+    <ion-button (click)="presentModal()" slot="end">
+      <ion-icon size="large" name="search-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <ion-searchbar></ion-searchbar> -->
-
   <ion-card *ngFor="let estado of estados">
     <ion-card-header>
       <ion-card-subtitle> {{estado.date | date:'dd/MM/yy'}} </ion-card-subtitle>

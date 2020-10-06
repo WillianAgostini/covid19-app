@@ -11,9 +11,11 @@ import { AppRoutingModule } from "./app-routing.module";
 import { CovidService } from "./services/covid.service";
 import { HttpClientModule } from "@angular/common/http";
 import { EstadosState } from "./estados/estados-state";
+import { CommonModule } from "@angular/common";
+import { PesquisaModalComponent } from "./pesquisa-modal/pesquisa-modal.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PesquisaModalComponent],
   entryComponents: [],
   imports: [
     BrowserModule,

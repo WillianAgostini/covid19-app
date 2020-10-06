@@ -20,6 +20,7 @@ export class IbgeService {
     this.estados$ = this._estados.asObservable();
     this.municipios$ = this._municipios.asObservable();
     this.estados$.subscribe((e) => (this._lastEstados = e));
+    this.getEstados();
   }
 
   getEstados() {
@@ -39,12 +40,11 @@ export class IbgeService {
       );
   }
 
-  getMunicipios(sigla: string) {
-    let uf = this._lastEstados.find((x) => x.sigla == sigla);
+  getMunicipios(sigla: IbgeEstado) {
     this._municipios.next([]);
     let url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/#/municipios".replace(
       "#",
-      uf.id.toString()
+      sigla.id.toString()
     );
 
     this.http
