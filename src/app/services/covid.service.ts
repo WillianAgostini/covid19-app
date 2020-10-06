@@ -12,26 +12,22 @@ export class CovidService {
 
   constructor(public httpClient: HttpClient) {}
 
-  BuscarDados() {
-    this.httpClient
-      .get(this.url, { params: this.CriarParametros() })
-      .subscribe((dados: CovidModel) => {
-        console.log(dados),
-          (err: any) => {
-            console.log(err);
-          };
-      });
+  BuscarDados(params: HttpParams) {
+    return this.httpClient.get<CovidModel>(this.url, { params: params });
   }
 
-  CriarParametros() {
+  CriarParametros(state?: string, city?: string, place_type?: string) {
     // state
     // page
     // is_last
     // city
     // place_type = state | city
-    return new HttpParams()
-      .set("state", "RS")
-      .set("is_last", "True")
-      .set("place_type", "state");
+
+    let parametros = new HttpParams().set("is_last", "True");
+    if (state) parametros = parametros.set("state", state);
+    if (city) parametros = parametros.set("city", city);
+    if (place_type) parametros = parametros.set("place_type", place_type);
+
+    return parametros;
   }
 }
