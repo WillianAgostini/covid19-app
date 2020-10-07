@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { AlertController } from "@ionic/angular";
+import { AlertController, ModalController } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { IbgeEstado } from "../model/ibge-estado";
 import { IbgeMunicipio } from "../model/ibge-municipio";
 import { IbgeService } from "../services/ibge.service";
+import { StorageService } from "../services/storage.service";
 
 @Component({
   selector: "app-pesquisa-modal",
@@ -20,7 +21,9 @@ export class PesquisaModalComponent implements OnInit {
 
   constructor(
     public ibgeService: IbgeService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public storageService: StorageService,
+    public modalController: ModalController
   ) {
     this.ibgeService.municipios$.subscribe((x) => {
       this.municipios = x;
@@ -60,8 +63,10 @@ export class PesquisaModalComponent implements OnInit {
         },
         {
           text: "Sim",
-          handler: () => {
+          handler: async () => {
             console.log("Adicionar", municipio);
+            await this.storageService.addMunicipio(municipio.nome);
+            this.modalController.dismiss();
           },
         },
       ],

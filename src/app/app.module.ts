@@ -13,6 +13,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { EstadosState } from "./estados/estados-state";
 import { CommonModule } from "@angular/common";
 import { PesquisaModalComponent } from "./pesquisa-modal/pesquisa-modal.component";
+import { StorageService } from "./services/storage.service";
 
 @NgModule({
   declarations: [AppComponent, PesquisaModalComponent],
@@ -29,6 +30,7 @@ import { PesquisaModalComponent } from "./pesquisa-modal/pesquisa-modal.componen
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CovidService,
     EstadosState,
+    StorageService,
   ],
   bootstrap: [AppComponent],
 })
