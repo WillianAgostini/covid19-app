@@ -35,9 +35,18 @@ export class EstadosPage implements OnInit, OnDestroy {
   ngOnInit() {}
 
   async presentModal() {
-    const modal = await this.modalController.create({
+    let modal = await this.modalController.create({
       component: PesquisaModalComponent,
+      componentProps: {
+        // mode: "city",
+        mode: "state",
+      },
     });
-    return await modal.present();
+
+    modal.onDidDismiss().then(() => {
+      this.state.BuscarEstados();
+    });
+
+    await modal.present();
   }
 }

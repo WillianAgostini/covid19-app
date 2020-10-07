@@ -1,39 +1,58 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>Buscar Município</ion-title>
+    <ion-title *ngIf="mode == 'state'">Buscar Estado</ion-title>
+    <ion-title *ngIf="mode == 'city'">Buscar Município</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-item>
-    <ion-label>Estado</ion-label>
-    <ion-select
-      placeholder="Selecione um estado"
-      okText="Ok"
-      cancelText="Cancelar"
-      (ionChange)="change($event.target.value)"
-    >
-      <ion-select-option
-        *ngFor="let estado of ibgeService.estados$ | async"
-        [value]="estado"
-        >{{ estado.nome }}</ion-select-option
+  <div *ngIf="mode == 'city'">
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select
+        placeholder="Selecione um estado"
+        okText="Ok"
+        cancelText="Cancelar"
+        (ionChange)="change($event.target.value)"
       >
-    </ion-select>
-  </ion-item>
+        <ion-select-option *ngFor="let estado of estados" [value]="estado">{{
+          estado.nome
+        }}</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-searchbar
-    (ionChange)="SearchBarAlterado($event.target.value)"
-    placeholder="Município"
-    debounce="500"
-    [disabled]="searchBarDesabilidado"
-    animated
-  ></ion-searchbar>
+    <ion-searchbar
+      (ionChange)="SearchBarAlterado($event.target.value)"
+      placeholder="Município"
+      debounce="500"
+      [disabled]="searchBarDesabilidado"
+      animated
+    ></ion-searchbar>
 
-  <ion-list>
-    <ion-item
-      *ngFor="let municipio of municipiosFiltro"
-      button
-      (click)="AdicionarMunicipio(municipio)"
-      >{{ municipio.nome }}</ion-item
-    >
-  </ion-list>
+    <ion-list>
+      <ion-item
+        *ngFor="let municipio of municipiosFiltro"
+        button
+        (click)="AdicionarMunicipio(municipio)"
+        >{{ municipio.nome }}</ion-item
+      >
+    </ion-list>
+  </div>
+
+  <div *ngIf="mode == 'state'">
+    <ion-searchbar
+      (ionChange)="SearchBarAlteradoEstado($event.target.value)"
+      placeholder="Estado"
+      debounce="500"
+      animated
+    ></ion-searchbar>
+
+    <ion-list>
+      <ion-item
+        *ngFor="let estado of estadosFiltro"
+        button
+        (click)="AdicionarEstado(estado)"
+        >{{ estado.nome }}</ion-item
+      >
+    </ion-list>
+  </div>
 </ion-content>

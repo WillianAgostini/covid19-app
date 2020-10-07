@@ -12,6 +12,9 @@ import { StorageService } from "../services/storage.service";
   styleUrls: ["./pesquisa-modal.component.scss"],
 })
 export class PesquisaModalComponent implements OnInit {
+  mode: string;
+
+  estadosFiltro: Array<IbgeEstado>;
   estados: Array<IbgeEstado>;
   estadoSelecionado: IbgeEstado;
 
@@ -30,6 +33,10 @@ export class PesquisaModalComponent implements OnInit {
       this.municipiosFiltro = x;
       this.searchBarDesabilidado = !(x != null && x.length > 0);
     });
+    this.ibgeService.estados$.subscribe((x) => {
+      this.estados = x;
+      this.estadosFiltro = x;
+    });
   }
 
   ngOnInit() {}
@@ -43,6 +50,14 @@ export class PesquisaModalComponent implements OnInit {
     if (value == "" || value == null) this.municipiosFiltro = this.municipios;
     else
       this.municipiosFiltro = this.municipios.filter((x) =>
+        x.nome.toLowerCase().match(value.toLowerCase())
+      );
+  }
+
+  SearchBarAlteradoEstado(value: string) {
+    if (value == "" || value == null) this.estadosFiltro = this.estados;
+    else
+      this.estadosFiltro = this.estados.filter((x) =>
         x.nome.toLowerCase().match(value.toLowerCase())
       );
   }
@@ -66,6 +81,33 @@ export class PesquisaModalComponent implements OnInit {
           handler: async () => {
             console.log("Adicionar", municipio);
             await this.storageService.addMunicipio(municipio.nome);
+            this.modalController.dismiss();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async AdicionarEstado(estado: IbgeEstado) {
+    const alert = await this.alertController.create({
+      header: estado.nome,
+      subHeader: estado.sigla,
+      message: "Deseja adicionar esse Estado?",
+      buttons: [
+        {
+          text: "Não",
+          role: "cancel",
+          handler: (blah) => {
+            console.log("Confirm Cancel: blah");
+          },
+        },
+        {
+          text: "Sim",
+          handler: async () => {
+            console.log("Adicionar", estado);
+            await this.storageService.addEstado(estado.sigla);
             this.modalController.dismiss();
           },
         },
