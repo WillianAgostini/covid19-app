@@ -19,15 +19,12 @@ const { Storage } = Plugins;
   styleUrls: ["./estados.page.scss"],
 })
 export class EstadosPage implements OnInit, OnDestroy {
-  estados: Result[];
-
   constructor(
     public state: EstadosState,
     public modalController: ModalController,
     public storageService: StorageService
   ) {
     this.state.BuscarEstados();
-    this.state.estados$.subscribe((x) => ((this.estados = x), console.log(x)));
   }
 
   ngOnDestroy(): void {}

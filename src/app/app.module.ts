@@ -14,6 +14,7 @@ import { EstadosState } from "./estados/estados-state";
 import { CommonModule } from "@angular/common";
 import { PesquisaModalComponent } from "./pesquisa-modal/pesquisa-modal.component";
 import { StorageService } from "./services/storage.service";
+import { MunicipiosState } from "./municipios/municipios-state";
 
 @NgModule({
   declarations: [AppComponent, PesquisaModalComponent],
@@ -30,6 +31,7 @@ import { StorageService } from "./services/storage.service";
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CovidService,
     EstadosState,
+    MunicipiosState,
     StorageService,
   ],
   bootstrap: [AppComponent],

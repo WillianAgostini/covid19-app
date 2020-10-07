@@ -80,7 +80,7 @@ export class PesquisaModalComponent implements OnInit {
           text: "Sim",
           handler: async () => {
             console.log("Adicionar", municipio);
-            await this.storageService.addMunicipio(municipio.nome);
+            await this.storageService.addMunicipio(municipio);
             this.modalController.dismiss();
           },
         },
@@ -107,7 +107,7 @@ export class PesquisaModalComponent implements OnInit {
           text: "Sim",
           handler: async () => {
             console.log("Adicionar", estado);
-            await this.storageService.addEstado(estado.sigla);
+            await this.storageService.addEstado(estado);
             this.modalController.dismiss();
           },
         },

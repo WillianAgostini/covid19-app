@@ -9,10 +9,10 @@ import { StorageService } from "../services/storage.service";
 @Injectable({
   providedIn: "root",
 })
-export class EstadosState {
-  private _estados = new BehaviorSubject<Result[]>([]);
+export class MunicipiosState {
+  private _municipio = new BehaviorSubject<Result[]>([]);
 
-  public estados$: Observable<Result[]>;
+  public municipios$: Observable<Result[]>;
 
   /**
    *
@@ -21,22 +21,27 @@ export class EstadosState {
     public covidService: CovidService,
     public storageService: StorageService
   ) {
-    this.estados$ = this._estados.asObservable();
+    this.municipios$ = this._municipio.asObservable();
   }
 
-  async BuscarEstados() {
-    let estados = await this.storageService.getEstados();
+  async BuscarMunicipios() {
+    let municipios = await this.storageService.getMunicipios();
 
     let req = new Array<Observable<CovidModel>>();
-    estados.forEach((estado) => {
-      let uf = this.covidService.CriarParametros(estado.sigla, null, "state");
-      req.push(this.covidService.BuscarDados(uf));
+    municipios.forEach((municipio) => {
+      if (municipio == null) return;
+      let city = this.covidService.CriarParametros(
+        null,
+        municipio.nome,
+        "city"
+      );
+      req.push(this.covidService.BuscarDados(city));
     });
 
     forkJoin(req).subscribe((estados) => {
       let resultados: Result[] = [];
       estados.forEach((x) => (resultados = resultados.concat(x.results)));
-      this._estados.next(resultados);
+      this._municipio.next(resultados);
     });
   }
 }

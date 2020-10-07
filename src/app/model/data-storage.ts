@@ -1,4 +1,7 @@
+import { IbgeEstado } from "./ibge-estado";
+import { IbgeMunicipio } from "./ibge-municipio";
+
 export class DataStorage {
-  estados = [];
-  municipios = [];
+  estados: IbgeEstado[] = [];
+  municipios: IbgeMunicipio[] = [];
 }
