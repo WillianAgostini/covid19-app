@@ -1,3 +1,28 @@
-<p>
-  estados works!
-</p>
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Estados</ion-title>
+    <ion-button (click)="presentModal()" slot="end">
+      <ion-icon size="large" name="search-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header> -->
+
+<!-- <ion-content> -->
+<ion-card *ngFor="let estado of state.estados$ | async">
+  <ion-card-header>
+    <ion-card-subtitle class="ion-no-margin">
+      {{ estado.date | date: "dd/MM/yy" }}
+    </ion-card-subtitle>
+
+    <ion-card-title>{{ estado.state }}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{ estado.confirmed | number }} casos e {{ estado.deaths | number }} mortes
+    confirmadas.
+  </ion-card-content>
+</ion-card>
+<!-- </ion-content> -->

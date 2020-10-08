@@ -10,11 +10,10 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { CovidService } from "./services/covid.service";
 import { HttpClientModule } from "@angular/common/http";
-import { EstadosState } from "./estados/estados-state";
-import { CommonModule } from "@angular/common";
+import { EstadosState } from "./components/estados/estados-state";
 import { PesquisaModalComponent } from "./pesquisa-modal/pesquisa-modal.component";
 import { StorageService } from "./services/storage.service";
-import { MunicipiosState } from "./municipios/municipios-state";
+import { MunicipiosState } from "./components/municipios/municipios-state";
 
 @NgModule({
   declarations: [AppComponent, PesquisaModalComponent],

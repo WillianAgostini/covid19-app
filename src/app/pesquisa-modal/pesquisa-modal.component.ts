@@ -116,4 +116,8 @@ export class PesquisaModalComponent implements OnInit {
 
     await alert.present();
   }
+
+  Sair() {
+    this.modalController.dismiss();
+  }
 }

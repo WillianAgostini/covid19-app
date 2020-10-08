@@ -1,7 +1,13 @@
 <ion-header translucent>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title *ngIf="mode == 'state'">Buscar Estado</ion-title>
     <ion-title *ngIf="mode == 'city'">Buscar Município</ion-title>
+    <ion-buttons (click)="Sair()" slot="primary">
+      <ion-button> Voltar </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
