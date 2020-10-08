@@ -15,7 +15,12 @@ export class FolderPage implements OnInit {
     public covidService: CovidService
   ) {}
 
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400,
+  };
+
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get("id");
+    this.folder = "";
   }
 }
