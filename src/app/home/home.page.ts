@@ -3,6 +3,7 @@ import { ModalController, IonSlides, PopoverController } from "@ionic/angular";
 import { Capability } from "protractor";
 import { EstadosState } from "../components/estados/estados-state";
 import { MunicipiosState } from "../components/municipios/municipios-state";
+import { OptionsPopoverItensComponent } from "../components/options-popover-itens/options-popover-itens.component";
 import { OptionsPopoverComponent } from "../components/options-popover/options-popover.component";
 import { PesquisaModalComponent } from "../pesquisa-modal/pesquisa-modal.component";
 
@@ -54,10 +55,33 @@ export class HomePage implements OnInit {
     });
   }
 
-  async presentPopover() {
+  async presentPopover(ev: any) {
+    this.slides.getActiveIndex().then(async (index) => {
+      let mode = index == 0 ? "estados" : "municípios";
+      const popover = await this.popoverController.create({
+        component: OptionsPopoverComponent,
+        event: ev,
+        componentProps: {
+          excluirInfo: mode,
+        },
+        translucent: true,
+        animated: true,
+      });
+
+      popover.onDidDismiss().then(() => {
+        this.excluirItens(index);
+      });
+
+      return await popover.present();
+    });
+  }
+
+  async excluirItens(index: number) {
     const popover = await this.popoverController.create({
-      component: OptionsPopoverComponent,
-      // event: ev,
+      component: OptionsPopoverItensComponent,
+      componentProps: {
+        index: index,
+      },
       translucent: true,
       animated: true,
     });

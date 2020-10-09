@@ -1,6 +1,7 @@
 export interface IbgeMunicipio {
   id: number;
   nome: string;
+  isChecked: boolean;
 }
 
 // export interface Regiao {

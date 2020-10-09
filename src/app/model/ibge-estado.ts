@@ -3,4 +3,5 @@ export interface IbgeEstado {
   sigla: string;
   nome: string;
   regiao: string;
+  isChecked: boolean;
 }

@@ -48,6 +48,18 @@ export class StorageService {
     await this.saveData(storage);
   }
 
+  async removeEstado(estado: IbgeEstado) {
+    let storage = await this.getStorage();
+    storage.estados = storage.estados.filter((x) => x.id != estado.id);
+    await this.saveData(storage);
+  }
+
+  async removeMunicipio(municipio: IbgeMunicipio) {
+    let storage = await this.getStorage();
+    storage.municipios = storage.municipios.filter((x) => x.id != municipio.id);
+    await this.saveData(storage);
+  }
+
   private async saveData(storage: DataStorage) {
     let data = JSON.stringify(storage);
     await Storage.set({
