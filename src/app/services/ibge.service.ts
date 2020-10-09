@@ -12,13 +12,16 @@ export class IbgeService {
   private _lastEstados: Array<IbgeEstado>;
   private _estados = new BehaviorSubject<Array<IbgeEstado>>([]);
   private _municipios = new BehaviorSubject<Array<IbgeMunicipio>>([]);
+  private _municipiosSearching = new BehaviorSubject<boolean>(false);
 
   public estados$: Observable<Array<IbgeEstado>>;
   public municipios$: Observable<Array<IbgeMunicipio>>;
+  public municipiosSearching$: Observable<boolean>;
 
   constructor(private http: HttpClient) {
     this.estados$ = this._estados.asObservable();
     this.municipios$ = this._municipios.asObservable();
+    this.municipiosSearching$ = this._municipiosSearching.asObservable();
     this.estados$.subscribe((e) => (this._lastEstados = e));
     this.getEstados();
   }
@@ -41,6 +44,7 @@ export class IbgeService {
   }
 
   getMunicipios(sigla: IbgeEstado) {
+    this._municipiosSearching.next(true);
     this._municipios.next([]);
     let url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados/#/municipios".replace(
       "#",
@@ -57,7 +61,8 @@ export class IbgeService {
         (err_estados) => {
           console.log("err_estados", err_estados);
           this._municipios.next([]);
-        }
+        },
+        () => this._municipiosSearching.next(false)
       );
   }
 }

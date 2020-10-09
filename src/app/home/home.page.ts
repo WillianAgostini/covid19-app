@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { ModalController, IonSlides } from "@ionic/angular";
+import { ModalController, IonSlides, PopoverController } from "@ionic/angular";
 import { Capability } from "protractor";
 import { EstadosState } from "../components/estados/estados-state";
 import { MunicipiosState } from "../components/municipios/municipios-state";
+import { OptionsPopoverComponent } from "../components/options-popover/options-popover.component";
 import { PesquisaModalComponent } from "../pesquisa-modal/pesquisa-modal.component";
 
 @Component({
@@ -21,16 +22,17 @@ export class HomePage implements OnInit {
   constructor(
     public stateMunicipio: MunicipiosState,
     public stateEstado: EstadosState,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public popoverController: PopoverController
   ) {
     this.stateEstado.BuscarEstados();
     this.stateMunicipio.BuscarMunicipios();
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.slides.startAutoplay().then((x) => console.log);
-    }, 1000);
+    // setTimeout(() => {
+    //   this.slides.startAutoplay().then((x) => console.log);
+    // }, 1000);
   }
 
   async presentModal() {
@@ -50,5 +52,15 @@ export class HomePage implements OnInit {
 
       await modal.present();
     });
+  }
+
+  async presentPopover() {
+    const popover = await this.popoverController.create({
+      component: OptionsPopoverComponent,
+      // event: ev,
+      translucent: true,
+      animated: true,
+    });
+    return await popover.present();
   }
 }

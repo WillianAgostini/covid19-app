@@ -17,7 +17,6 @@ export class StorageService {
     let { value } = await Storage.get({ key: this.key });
     let data = JSON.parse(value) as DataStorage;
     if (!data) data = new DataStorage();
-    console.log("Got item: ", data);
     return data;
   }
 

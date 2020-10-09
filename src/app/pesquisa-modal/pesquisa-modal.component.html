@@ -33,7 +33,10 @@
       [disabled]="searchBarDesabilidado"
       animated
     ></ion-searchbar>
-
+    <ion-progress-bar
+      *ngIf="ibgeService.municipiosSearching$ | async"
+      type="indeterminate"
+    ></ion-progress-bar>
     <ion-list>
       <ion-item
         *ngFor="let municipio of municipiosFiltro"

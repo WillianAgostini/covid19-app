@@ -14,15 +14,26 @@
 <ion-card *ngFor="let estado of state.estados$ | async">
   <ion-card-header>
     <ion-card-subtitle class="ion-no-margin">
-      {{ estado.date | date: "dd/MM/yy" }}
+      <ion-label>
+        {{ estado.date | date: "dd/MM/yy" }}
+      </ion-label>
     </ion-card-subtitle>
 
-    <ion-card-title>{{ estado.state }}</ion-card-title>
+    <ion-card-title>
+      <ion-label>{{ estado.state }}</ion-label>
+    </ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
-    {{ estado.confirmed | number }} casos e {{ estado.deaths | number }} mortes
-    confirmadas.
+    <ion-label>
+      {{ estado.confirmed | number }} casos e
+      {{ estado.deaths | number }} mortes confirmadas.
+    </ion-label>
   </ion-card-content>
 </ion-card>
+
+<ion-card *ngIf="(state.estados$ | async).length == 0">
+  <ion-header> Nenhuma informação </ion-header>
+</ion-card>
+
 <!-- </ion-content> -->
