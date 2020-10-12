@@ -11,9 +11,10 @@ import { StorageService } from "../../services/storage.service";
 })
 export class EstadosState {
   private _estados = new BehaviorSubject<Result[]>([]);
+  private _mensagemErro = new BehaviorSubject<string>("");
 
   public estados$: Observable<Result[]>;
-
+  public mensagemErro$: Observable<string>;
   /**
    *
    */
@@ -22,6 +23,7 @@ export class EstadosState {
     public storageService: StorageService
   ) {
     this.estados$ = this._estados.asObservable();
+    this.mensagemErro$ = this._mensagemErro.asObservable();
   }
 
   async BuscarEstados() {
@@ -33,10 +35,15 @@ export class EstadosState {
       req.push(this.covidService.BuscarDados(uf));
     });
 
-    forkJoin(req).subscribe((estados) => {
-      let resultados: Result[] = [];
-      estados.forEach((x) => (resultados = resultados.concat(x.results)));
-      this._estados.next(resultados);
-    });
+    forkJoin(req).subscribe(
+      (estados) => {
+        let resultados: Result[] = [];
+        estados.forEach((x) => (resultados = resultados.concat(x.results)));
+        this._estados.next(resultados);
+      },
+      (err) => {
+        this._mensagemErro.next(`${err["status"]} status. Erro ao buscar`);
+      }
+    );
   }
 }

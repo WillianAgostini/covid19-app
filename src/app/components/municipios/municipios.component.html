@@ -26,4 +26,12 @@
     mortes confirmadas.
   </ion-card-content>
 </ion-card>
+
+<ion-card *ngIf="(state.municipios$ | async).length == 0">
+  <ion-header> Nenhuma informação </ion-header>
+</ion-card>
+
+<ion-card *ngIf="(state.mensagemErro$ | async) != ''">
+  <ion-header>{{ state.mensagemErro$ | async }}</ion-header>
+</ion-card>
 <!-- </ion-content> -->

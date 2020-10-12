@@ -36,4 +36,8 @@
   <ion-header> Nenhuma informação </ion-header>
 </ion-card>
 
+<ion-card *ngIf="(state.mensagemErro$ | async) != ''">
+  <ion-header>{{ state.mensagemErro$ | async }}</ion-header>
+</ion-card>
+
 <!-- </ion-content> -->

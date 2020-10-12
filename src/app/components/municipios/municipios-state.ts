@@ -11,8 +11,10 @@ import { StorageService } from "../../services/storage.service";
 })
 export class MunicipiosState {
   private _municipio = new BehaviorSubject<Result[]>([]);
+  private _mensagemErro = new BehaviorSubject<string>("");
 
   public municipios$: Observable<Result[]>;
+  public mensagemErro$: Observable<string>;
 
   /**
    *
@@ -38,10 +40,15 @@ export class MunicipiosState {
       req.push(this.covidService.BuscarDados(city));
     });
 
-    forkJoin(req).subscribe((estados) => {
-      let resultados: Result[] = [];
-      estados.forEach((x) => (resultados = resultados.concat(x.results)));
-      this._municipio.next(resultados);
-    });
+    forkJoin(req).subscribe(
+      (estados) => {
+        let resultados: Result[] = [];
+        estados.forEach((x) => (resultados = resultados.concat(x.results)));
+        this._municipio.next(resultados);
+      },
+      (err) => {
+        this._mensagemErro.next(`${err["status"]} status. Erro ao buscar`);
+      }
+    );
   }
 }
