@@ -14,6 +14,8 @@ import { EstadosState } from "./components/estados/estados-state";
 import { PesquisaModalComponent } from "./pesquisa-modal/pesquisa-modal.component";
 import { StorageService } from "./services/storage.service";
 import { MunicipiosState } from "./components/municipios/municipios-state";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, PesquisaModalComponent],
@@ -23,6 +25,7 @@ import { MunicipiosState } from "./components/municipios/municipios-state";
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     StatusBar,
